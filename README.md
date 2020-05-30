@@ -1,12 +1,15 @@
 # Wifiqr
 
-a simple tool for sharing wifi
+Creates a qr code for connecting to the network you're connected to.
+
+You just got connected to a new wifi and everyone's asking you for the deets? Try this:
 
 ```bash
 go install github.com/Robindiddams/wifiqr
 # it will ask to unlock your keychain
 wifiqr
 ```
+It'l pop up with a qr code that lets people join the network your on.
 
 Only supports MacOS, for now.
 
