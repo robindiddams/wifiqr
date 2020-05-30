@@ -3,9 +3,10 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
-	"github.com/Robindiddams/wifiqr/wifi"
+	"github.com/Robindiddams/wifiqr/system"
 	"github.com/skip2/go-qrcode"
 	"github.com/spf13/cobra"
 )
@@ -14,41 +15,33 @@ func wifiString(ssid, password string) string {
 	return fmt.Sprintf("WIFI:S:%s;T:WPA2;P:%s;;", ssid, password)
 }
 
+func qrFilename(ssid string) string {
+	return fmt.Sprintf("%s.png", strings.ReplaceAll(ssid, " ", "-"))
+}
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "wifiqr",
 	Short: "create a qr code to log into the wifi you're connected to",
 	Run: func(cmd *cobra.Command, args []string) {
-		verbose, _ := cmd.Flags().GetBool("verbose")
-		if verbose {
-			fmt.Println("getting connected network")
-		}
-		ssid, err := wifi.GetConnectedSSID()
+		ssid, err := system.GetConnectedSSID()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		if verbose {
-			fmt.Println("connected network is", ssid)
-			fmt.Printf("getting %s password, keychain prompt incomming...\n", ssid)
-		}
-		password, err := wifi.GetWifiPassword(ssid)
+		password, err := system.GetWifiPassword(ssid)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		fn := fmt.Sprintf("%s.png", strings.ReplaceAll(ssid, " ", "-"))
-		if verbose {
-			fmt.Printf("got %s password\nwriting qrcode to %s\n", ssid, fn)
-		}
+		fn := filepath.Join(os.TempDir(), qrFilename(ssid))
 		if err := qrcode.WriteFile(wifiString(ssid, password), qrcode.Medium, 256, fn); err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		if verbose {
-			fmt.Printf("qrcode written successfully🎉\n\n\t`open %s`\n", fn)
-		} else {
-			fmt.Println(fn)
+		if err := system.ViewFile(fn); err != nil {
+			fmt.Println(err)
+			os.Exit(1)
 		}
 	},
 }
@@ -63,5 +56,5 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("verbose", "v", false, "more words")
+	// rootCmd.Flags().BoolP("verbose", "v", false, "more words") // TODO
 }

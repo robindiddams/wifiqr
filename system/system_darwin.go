@@ -1,4 +1,4 @@
-package wifi
+package system
 
 import (
 	"errors"
@@ -41,4 +41,13 @@ func GetConnectedSSID() (string, error) {
 		return matches[1], nil
 	}
 	return "", errors.New("unable to find ssid")
+}
+
+// ViewFile opens the file in preview
+func ViewFile(filename string) error {
+	cmd := exec.Command("open", filename)
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("error running command %s: %w", cmd.String(), err)
+	}
+	return nil
 }
