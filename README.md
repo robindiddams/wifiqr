@@ -9,7 +9,7 @@ go install github.com/Robindiddams/wifiqr
 # it will ask to unlock your keychain
 wifiqr
 ```
-It'l pop up with a qr code that lets people join the network your on.
+It'll pop up with a qr code that lets people join the network you're on.
 
 Only supports MacOS, for now.
 
