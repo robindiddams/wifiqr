@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Robindiddams/wifiqr/system"
+	"github.com/robindiddams/wifiqr/system"
 	"github.com/skip2/go-qrcode"
 	"github.com/spf13/cobra"
 )

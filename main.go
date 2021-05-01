@@ -1,6 +1,6 @@
 package main
 
-import "github.com/Robindiddams/wifiqr/cmd"
+import "github.com/robindiddams/wifiqr/cmd"
 
 func main() {
 	cmd.Execute()

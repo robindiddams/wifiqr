@@ -1,4 +1,4 @@
-module github.com/Robindiddams/wifiqr
+module github.com/robindiddams/wifiqr
 
 go 1.14
 

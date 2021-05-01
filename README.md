@@ -5,10 +5,11 @@ Creates a qr code for connecting to the network you're connected to.
 You just got connected to a new wifi and everyone's asking you for the deets? Try this:
 
 ```bash
-go install github.com/Robindiddams/wifiqr
+go install github.com/robindiddams/wifiqr
 # it will ask to unlock your keychain
 wifiqr
 ```
+
 It'll pop up with a qr code that lets people join the network you're on.
 
 Only supports MacOS, for now.
